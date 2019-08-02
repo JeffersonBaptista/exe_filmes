@@ -20,7 +20,7 @@ public class FilmeService {
 	}
 	
 	public Iterable<Filme> pegarTodos(){
-		return filmeRepository.findAll();
+			return filmeRepository.findAll();
 	}
 	
 	public Filme pegarPorId(int id){
@@ -33,25 +33,31 @@ public class FilmeService {
 	}
 	
 	public void atualizarFilme(int id, Filme filme) {
-		Optional<Filme> optionalMensagem = filmeRepository.findById(id);
+		Optional<Filme> optionalFilme = filmeRepository.findById(id);
 		
 		filme.setId(id);
 		filmeRepository.save(filme);
 			
 		
 	}
-	public void alugarFilme(int id, Filme filme) {
-		Optional<Filme> optionalMensagem = filmeRepository.findById(id);
+	public void deletarFilme(int id) {
+		filmeRepository.deleteById(id);
+	}
+	
+	public void alugarFilme(int id) {
+		Optional<Filme> optionalFilme = filmeRepository.findById(id);
 		
+		Filme filme = filmeRepository.findById(id).get();
 		filme.setId(id);
 		filme.setQuantidadeDisponivel(filme.getQuantidadeDisponivel()-1);
 		filmeRepository.save(filme);
 			
 		
 	}
-	public void devolverFilme(int id, Filme filme) {
-		Optional<Filme> optionalMensagem = filmeRepository.findById(id);
+	public void devolverFilme(int id) {
+		Optional<Filme> optionalfilme = filmeRepository.findById(id);
 		
+		Filme filme = filmeRepository.findById(id).get();
 		filme.setId(id);
 		filme.setQuantidadeDisponivel(filme.getQuantidadeDisponivel()+1);
 		filmeRepository.save(filme);
