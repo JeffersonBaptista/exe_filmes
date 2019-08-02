@@ -8,36 +8,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Filme implements Serializable{
+public class Filme implements Serializable {
 	private static final long serilVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
+	@NotBlank(message = "Compo nome Obrigatodirio")
+	private String nome;
+
 	@NotBlank(message = "Compo link da capa Obrigatodirio")
 	private String linkDaCapa;
-	
-	@NotBlank(message = "Compo ano Obrigatodirio")
+
+	@NotNull(message = "Compo ano Obrigatodirio")
 	private int ano;
-	
-	@NotBlank(message = "Compo duração Obrigatodirio")
+
+	@NotNull(message = "Compo duração Obrigatodirio")
 	private int duracao;
-	
+
 	@NotBlank(message = "Compo genero Obrigatodirio")
 	private String genero;
-	
-	@NotBlank(message = "Compo classificação indicativa Obrigatodirio")
+
+	@NotNull(message = "Compo classificação indicativa Obrigatodirio")
 	private int classificacaoIndicativa;
-	
-	@NotBlank(message = "Compo quantidade disponivel Obrigatodirio")
+
+	@NotNull(message = "Compo quantidade disponivel Obrigatodirio")
 	private int quantidadeDisponivel;
 
 	public Filme() {
-		
+
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Integer getId() {
@@ -95,11 +107,5 @@ public class Filme implements Serializable{
 	public void setQuantidadeDisponivel(int quantidadeDisponivel) {
 		this.quantidadeDisponivel = quantidadeDisponivel;
 	}
-	
-	
-	
-	
-	
-	
 
 }
