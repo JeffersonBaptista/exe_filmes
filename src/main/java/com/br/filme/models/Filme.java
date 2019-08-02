@@ -37,6 +37,9 @@ public class Filme implements Serializable {
 	@NotNull(message = "Compo classificação indicativa Obrigatodirio")
 	private int classificacaoIndicativa;
 
+	@NotNull
+	private int exemplares;
+
 	@NotNull(message = "Compo quantidade disponivel Obrigatodirio")
 	private int quantidadeDisponivel;
 
@@ -98,6 +101,15 @@ public class Filme implements Serializable {
 
 	public void setClassificacaoIndicativa(int classificacaoIndicativa) {
 		this.classificacaoIndicativa = classificacaoIndicativa;
+
+	}
+
+	public int getExemplares() {
+		return exemplares;
+	}
+
+	public void setExemplares(int exemplares) {
+		this.exemplares = exemplares;
 	}
 
 	public int getQuantidadeDisponivel() {
