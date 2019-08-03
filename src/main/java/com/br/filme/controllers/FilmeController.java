@@ -1,5 +1,7 @@
 package com.br.filme.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,47 +28,78 @@ public class FilmeController {
 
 	@GetMapping
 	public ResponseEntity<?> exibirFilmes() {
-		return ResponseEntity.ok(filmeService.pegarTodos());
+		if (filmeService.quantidadeFilmes() > 0) {
+
+			return ResponseEntity.ok(filmeService.pegarTodos());
+		}
+		return ResponseEntity.noContent().build();
 
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> filmePorId(@PathVariable int id){		
-		return ResponseEntity.ok(filmeService.pegarPorId(id));
+	public ResponseEntity<?> filmePorId(@PathVariable int id) {
+		try {
+			return ResponseEntity.ok(filmeService.pegarPorId(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
 	}
 
 	@PostMapping("/novo")
-	public ResponseEntity<Filme> salvarMansagem(@RequestBody Filme filme) {
+	public ResponseEntity<Filme> salvarMansagem(@Valid @RequestBody Filme filme) {
 		filmeService.salvarFilme(filme);
 		return ResponseEntity.status(HttpStatus.CREATED).body(filme);
 
 	}
 
 	@PutMapping("/atualizar/{id}")
-	public ResponseEntity<?> atualizarFilme(@PathVariable int id, @RequestBody Filme filme){
-		filme.setId(id);
-		filmeService.atualizarFilme(id, filme);
-		return ResponseEntity.ok().body(filme);
+	public ResponseEntity<?> atualizarFilme(@PathVariable int id, @Valid @RequestBody Filme filme) {
+		try {
+			filme.setId(id);
+			filmeService.atualizarFilme(id, filme);
+			return ResponseEntity.ok().body(filme);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
 	}
-	
+
 	@DeleteMapping("/deletar/{id}")
-	public ResponseEntity<?> deletarFilme(@PathVariable int id){
-		filmeService.deletarFilme(id);
-		return ResponseEntity.ok().build();
-		
+	public ResponseEntity<?> deletarFilme(@PathVariable int id) {
+
+		try {
+			filmeService.deletarFilme(id);
+			return ResponseEntity.ok().build();
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
 	}
+
 	@GetMapping("/alugar/{id}")
-	public ResponseEntity<?> alugarFilme(@PathVariable int id){
-		filmeService.alugarFilme(id);
-		return ResponseEntity.ok().body(filmeService.pegarPorId(id));
+	public ResponseEntity<?> alugarFilme(@PathVariable int id) {
+		try {
+			filmeService.alugarFilme(id);
+			return ResponseEntity.ok().body(filmeService.pegarPorId(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 		
+
 	}
+
 	@GetMapping("/devolver/{id}")
-	public ResponseEntity<?> devolverFilme(@PathVariable int id){
-		filmeService.devolverFilme(id);
-		return ResponseEntity.ok().body(filmeService.pegarPorId(id));
+	public ResponseEntity<?> devolverFilme(@PathVariable int id) {
+		try {
+			filmeService.devolverFilme(id);
+			return ResponseEntity.ok().body(filmeService.pegarPorId(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 		
+
 	}
-	
-	
+
 }
